@@ -29,7 +29,7 @@ void setup() {
 
 void loop() {
   io.run();
- sensor_reading =  cs_4_6.capacitiveSensor(30);
+ sensor_reading =  cs_14_13.capacitiveSensor(30);
 
  Serial.print("sending -> ");
  Serial.println(sensor_reading);

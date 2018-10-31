@@ -1,14 +1,14 @@
 #include <CapacitiveSensor.h>
 #include "secrets.h"
 #include <ESP8266WiFi.h>
-int count = 0;
+//int count = 0;
 #define IO_LOOP_DELAY 5000
-unsigned long lastUpdate = 0;
+//unsigned long lastUpdate = 0;
 // set up the 'counter' feed
 
 AdafruitIO_Feed *analog = io.feed("analog");
 
-CapacitiveSensor cs_14_13 = CapacitiveSensor(14, 13);
+CapacitiveSensor cs_16_2 = CapacitiveSensor(16, 2);
 
 long sensor_reading;
 
@@ -29,7 +29,7 @@ void setup() {
 
 void loop() {
   io.run();
- sensor_reading =  cs_14_13.capacitiveSensor(30);
+ sensor_reading =  cs_16_2.capacitiveSensor(30);
 
  Serial.print("sending -> ");
  Serial.println(sensor_reading);

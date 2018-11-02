@@ -26,6 +26,7 @@ CRGB leds[NUM_LEDS];
 CRGBPalette16 currentPalette;
 TBlendType    currentBlending;
 
+int x;
 
 //io
 
@@ -90,20 +91,27 @@ void loop() {
     
   // Get the currently touched pads
   currtouched = cap.touched();
-  
+ 
   for (uint8_t i=0; i<12; i++) {
+
+    
     // it if *is* touched and *wasnt* touched before, alert!
     if ((currtouched & _BV(i)) && !(lasttouched & _BV(i)) ) {
-      Serial.print(i); Serial.println(" touched");
+     currentPalette = LavaColors_p;
     }
     // if it *was* touched and now *isnt*, alert!
     if (!(currtouched & _BV(i)) && (lasttouched & _BV(i)) ) {
-      Serial.print(i); Serial.println(" released");
+     // Serial.print(i); Serial.println(" released");
+     currentPalette = OceanColors_p;
+//     x= i
     }
   }
- 
-  // reset our state
-  lasttouched = currtouched;
+ Serial.println(x);
+// while(x == 1){
+//  currentPalette = LavaColors_p;  currentBlending = LINEARBLEND;
+// } //else { currentPalette = RainbowColors_p;  currentBlending = LINEARBLEND; }
+//  // reset our state
+ lasttouched = currtouched;
 
 
  

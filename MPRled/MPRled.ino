@@ -97,7 +97,9 @@ void loop() {
     
     // it if *is* touched and *wasnt* touched before, alert!
     if ((currtouched & _BV(i)) && !(lasttouched & _BV(i)) ) {
-     currentPalette = LavaColors_p;
+     if (i == 1){currentPalette = RainbowColors_p;} else if (i == 2){
+      currentPalette = LavaColors_p;
+     }
     }
     // if it *was* touched and now *isnt*, alert!
     if (!(currtouched & _BV(i)) && (lasttouched & _BV(i)) ) {

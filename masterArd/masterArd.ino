@@ -1,10 +1,5 @@
 #include <Wire.h>
-union                                               // Union used to convert raw data to 'float'.
-{
-    float dRXVal;
-    byte bRawData[4];
-}floatData;
-
+union                                               // Union used to convert raw data to 'float'
 void setup() {
   Wire.begin(); // join i2c bus (address optional for master)
 }
@@ -13,8 +8,7 @@ byte x = 0;
 
 void loop() {
   Wire.beginTransmission(8); // transmit to device #8
-  Wire.write("x is ");        // sends five bytes
-  Wire.write(x);              // sends one byte
+  
   Wire.endTransmission();    // stop transmitting
 
   x++;

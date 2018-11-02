@@ -1,4 +1,4 @@
-#include <CapacitiveSensor.h>
+
 #include <Wire.h>
 
 CapacitiveSensor   cs_4_2 = CapacitiveSensor(4,2);   
@@ -29,9 +29,5 @@ void receiveEvent(int howMany) {
 //  }
 //  int x = Wire.read();    // receive byte as an integer
 //  Serial.println(x);         // print the integer
-
-sensor_reading = cs_4_2.capacitiveSensor(30);
-float dTestVal = 123.456;
-Wire.write((byte*)&dTestVal, 4);
 
 }

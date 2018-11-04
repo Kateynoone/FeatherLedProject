@@ -30,10 +30,10 @@ int x;
 
 //io
 
-// #include "secrets.h"
-//
-//AdafruitIO_Feed *messages = io.feed("messages");
-//
+ #include "secrets.h"
+
+AdafruitIO_Feed *messages = io.feed("messages");
+
 
 void setup() {
   Serial.begin(9600);
@@ -62,19 +62,19 @@ void setup() {
     currentBlending = LINEARBLEND;
 
 //io stuff
- //  while(! Serial);
-//   Serial.print("connecting to adafruit IO");
-// 
-//  io.connect();
-//  messages->onMessage(handleMessage);
-//  while(io.status() < AIO_CONNECTED) {
-//    Serial.print(".");
-//    delay(500);
-//  }
-//
-// 
-//  Serial.println();
-//  Serial.println(io.statusText());
+   while(! Serial);
+   Serial.print("connecting to adafruit IO");
+ 
+  io.connect();
+  messages->onMessage(handleMessage);
+  while(io.status() < AIO_CONNECTED) {
+    Serial.print(".");
+    delay(500);
+  }
+
+ 
+  Serial.println();
+  Serial.println(io.statusText());
 
 }
 
@@ -98,8 +98,8 @@ void loop() {
     // it if *is* touched and *wasnt* touched before, alert!
     if ((currtouched & _BV(i)) && !(lasttouched & _BV(i)) ) {
      if (i == 1){currentPalette = RainbowColors_p;} else if (i == 2){
-      currentPalette = LavaColors_p;
-     }
+      currentPalette = LavaColors_p; currentBlending= LINEARBLEND;
+     } else if (i==11){ currentPalette = PartyColors_p; currentBlending= NOBLEND; }
     }
     // if it *was* touched and now *isnt*, alert!
     if (!(currtouched & _BV(i)) && (lasttouched & _BV(i)) ) {
@@ -117,9 +117,9 @@ void loop() {
 
 
  
+
+
 }
-
-
 
 //led
 void FillLEDsFromPaletteColors( uint8_t colorIndex)
@@ -133,12 +133,12 @@ void FillLEDsFromPaletteColors( uint8_t colorIndex)
     }
 }
 
-
-
 //io
-//void handleMessage(AdafruitIO_Data *data) {
-//
-//  Serial.print("received <- ");
-//  Serial.println(data->value());
+void handleMessage(AdafruitIO_Data *data) {
 
-//}
+  Serial.print("received <- ");
+  Serial.println(data->value());
+
+}
+
+

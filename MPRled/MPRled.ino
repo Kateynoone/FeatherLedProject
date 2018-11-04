@@ -26,7 +26,10 @@ CRGB leds[NUM_LEDS];
 CRGBPalette16 currentPalette;
 TBlendType    currentBlending;
 
-int x;
+
+extern CRGBPalette16 myPurplePalette;
+extern const TProgmemPalette16 myPurplePalette_p PROGMEM;
+
 
 //io
 
@@ -38,12 +41,8 @@ AdafruitIO_Feed *messages = io.feed("messages");
 void setup() {
   Serial.begin(9600);
 // cap
-  while (!Serial) { // needed to keep leonardo/micro from starting too fast!
-    delay(10);
-
-    
-    
-  }
+//  while (!Serial){ // needed to keep leonardo/micro from starting too fast!
+//    delay(10);}
   
   Serial.println("Adafruit MPR121 Capacitive Touch sensor test"); 
   if (!cap.begin(0x5A)) {
@@ -79,7 +78,7 @@ void setup() {
 }
 
 void loop() {
-//  io.run();
+ io.run();
    //led
     static uint8_t startIndex = 0;
     startIndex = startIndex +1; //motion speed
@@ -97,9 +96,13 @@ void loop() {
     
     // it if *is* touched and *wasnt* touched before, alert!
     if ((currtouched & _BV(i)) && !(lasttouched & _BV(i)) ) {
-     if (i == 1){currentPalette = RainbowColors_p;} else if (i == 2){
-      currentPalette = LavaColors_p; currentBlending= LINEARBLEND;
-     } else if (i==11){ currentPalette = PartyColors_p; currentBlending= NOBLEND; }
+      messages->save(i);
+      if (i == 1){currentPalette = RainbowColors_p; currentBlending= LINEARBLEND;
+     } else if (i==3){currentPalette = LavaColors_p; currentBlending= LINEARBLEND;
+     } else if (i==5){ currentPalette = PartyColors_p; currentBlending= NOBLEND;
+     } else if (i==7){ currentPalette = ForestColors_p; currentBlending= NOBLEND; 
+     } else if (i==9){ currentPalette = CloudColors_p; currentBlending= NOBLEND;
+     } else if (i==11){ currentPalette = myPurplePalette_p; currentBlending= LINEARBLEND;}
     }
     // if it *was* touched and now *isnt*, alert!
     if (!(currtouched & _BV(i)) && (lasttouched & _BV(i)) ) {
@@ -108,18 +111,14 @@ void loop() {
 //     x= i
     }
   }
- Serial.println(x);
+ //Serial.println();
 // while(x == 1){
 //  currentPalette = LavaColors_p;  currentBlending = LINEARBLEND;
 // } //else { currentPalette = RainbowColors_p;  currentBlending = LINEARBLEND; }
 //  // reset our state
  lasttouched = currtouched;
+ }
 
-
- 
-
-
-}
 
 //led
 void FillLEDsFromPaletteColors( uint8_t colorIndex)
@@ -141,4 +140,22 @@ void handleMessage(AdafruitIO_Data *data) {
 
 }
 
+const TProgmemPalette16 myPurplePalette_p PROGMEM =
+{
+    CRGB::Purple,
+    CRGB::Gray, // 'white' is too bright compared to red and blue
+    CRGB::Purple,
+    CRGB::Pink,
+    
+    CRGB::Purple,
+    CRGB::Gray,
+    CRGB::Purple,
+    CRGB::Pink,
+    
+    CRGB::Purple,
+    CRGB::Gray,
+    CRGB::Gray,
+    CRGB::Black,
+    CRGB::Black
+};
 
